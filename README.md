@@ -26,5 +26,6 @@ archetypeArtifactId: maven-archetype-quickstart
 ![](/assets/images/4.png)
 
 - Compile el proyecto para validar que todo este bien.
+
 ![](/assets/images/5.png)
 ![](/assets/images/6.png)
