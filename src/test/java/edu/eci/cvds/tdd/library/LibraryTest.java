@@ -1,5 +1,6 @@
 package edu.eci.cvds.tdd.library;
 
+import java.time.LocalDateTime;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -102,7 +103,7 @@ public class LibraryTest {
         library.addUser(natalia);
         library.addUser(jesus);
         library.addBook(elPrincipito);
-        library.addBook(elPrincipito); // Agregamos una segunda copia
+        library.addBook(elPrincipito);
 
         Loan loan1 = library.loanABook("1000097158", "9788467037769");
         Loan loan2 = library.loanABook("1000092885", "9788467037769");
@@ -111,6 +112,72 @@ public class LibraryTest {
         assertNotNull(loan2);
         assertEquals(LoanStatus.ACTIVE, loan1.getStatus());
         assertEquals(LoanStatus.ACTIVE, loan2.getStatus());
+    }
+  
+    @Test
+    public void shouldReturnLoan(){
+        User user = new User();
+        user.setName("Jesus");
+        user.setId("1000092885");
+        Book harryPotter1 = new Book("Harry Potter y la piedra filosofal", "JK Rowling", "9788497940933");
+        library.addBook(harryPotter1);
+        library.addUser(user);
+        Loan loan = library.loanABook(user.getId(), harryPotter1.getIsbn());
+
+        assertNotNull(loan);
+        Loan returnLoan = library.returnLoan(loan);
+        assertNotNull(returnLoan);
+        assertEquals(LoanStatus.RETURNED, returnLoan.getStatus());
+        assertNotNull(returnLoan.getReturnDate());
+    }
+
+    @Test
+    public void shouldIncreaseBooksAmountWhenReturnLoan(){
+        User user = new User();
+        user.setName("Jesus");
+        user.setId("1000092885");
+        Book harryPotter1 = new Book("Harry Potter y la piedra filosofal", "JK Rowling", "9788497940933");
+        library.addBook(harryPotter1);
+        library.addUser(user);
+        Loan loan = library.loanABook(user.getId(), harryPotter1.getIsbn());
+
+        int initialAmount = 1;
+        library.returnLoan(loan);
+        int updatedAmount = library.loanABook(user.getId(), harryPotter1.getIsbn()) == null ? initialAmount : initialAmount + 1;
+        assertEquals(initialAmount + 1, updatedAmount);
+    }
+
+    @Test
+    public void shouldNotReturnUnexistentLoan(){
+        User user = new User();
+        user.setName("Jesus");
+        user.setId("1000092885");
+        Book harryPotter1 = new Book("Harry Potter y la piedra filosofal", "JK Rowling", "9788497940933");
+        library.addBook(harryPotter1);
+        library.addUser(user);
+        Loan loan = library.loanABook(user.getId(), harryPotter1.getIsbn());
+
+        Loan notLoan = new Loan();
+        assertNull(library.returnLoan(notLoan));
+    }
+
+    @Test
+    public void shouldNotChangeStateOfLoanReturned(){
+        User user = new User();
+        user.setName("Jesus");
+        user.setId("1000092885");
+        Book harryPotter1 = new Book("Harry Potter y la piedra filosofal", "JK Rowling", "9788497940933");
+        library.addBook(harryPotter1);
+        library.addUser(user);
+        Loan loan = library.loanABook(user.getId(), harryPotter1.getIsbn());
+
+        library.returnLoan(loan);
+        LocalDateTime originalReturnDate = loan.getReturnDate();
+
+        Loan returnedLoan = library.returnLoan(loan);
+        assertNotNull(returnedLoan);
+        assertEquals(LoanStatus.RETURNED, returnedLoan.getStatus());
+        assertEquals(originalReturnDate, returnedLoan.getReturnDate());
     }
 
 }
