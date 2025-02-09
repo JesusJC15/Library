@@ -35,8 +35,29 @@ public class Library {
      * @return true if the book was stored false otherwise.
      */
     public boolean addBook(Book book) {
-        //TODO Implement the logic to add a new book into the map.
-        return false;
+        //Check if the book is null or if the book information is incomplete
+        if(!checkBookInfo(book)){
+            return false;
+        }
+
+        //Books with the same ISBN are considered the same book
+        for(Book b : books.keySet()){
+            if(b.equals(book)){
+                books.put(b, books.get(b) + 1);
+                return true;
+            }
+        }
+
+        //If the book is not in the map, add it
+        books.put(book, 1);
+        return true;
+    }
+
+    private boolean checkBookInfo(Book book) {
+        if(book == null){
+            return false;
+        }
+        return !(book.getTitle() == null || book.getAuthor() == null || book.getIsbn() == null);
     }
 
     /**
