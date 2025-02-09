@@ -156,8 +156,6 @@ public class LibraryTest {
         Book harryPotter1 = new Book("Harry Potter y la piedra filosofal", "JK Rowling", "9788497940933");
         library.addBook(harryPotter1);
         library.addUser(user);
-        Loan loan = library.loanABook(user.getId(), harryPotter1.getIsbn());
-
         Loan notLoan = new Loan();
         assertNull(library.returnLoan(notLoan));
     }
