@@ -40,7 +40,14 @@ public class LibraryTest {
     @Test
     public void shouldNotAddNullBook() {
         Book nullBook = null;
+        Book unvalidBook = new Book("Harry Potter y la piedra filosofal", "JK Rowling", null);
+        Book unvalidBook2 = new Book("Harry Potter y la piedra filosofal", null, "9788497940933");
+        Book unvalidBook3 = new Book(null, "JK Rowling", "9788497940933");
+
         assertFalse(library.addBook(nullBook));
+        assertFalse(library.addBook(unvalidBook));
+        assertFalse(library.addBook(unvalidBook2));
+        assertFalse(library.addBook(unvalidBook3));
     }
 
     @Test
@@ -177,5 +184,28 @@ public class LibraryTest {
         assertNotNull(returnedLoan);
         assertEquals(LoanStatus.RETURNED, returnedLoan.getStatus());
         assertEquals(originalReturnDate, returnedLoan.getReturnDate());
+    }
+
+    @Test
+    public void shouldCheckUserInfo(){
+        User user = new User();
+        user.setName("Jesus");
+        user.setId("1000092885");
+        library.addUser(user);
+        assertTrue(user.getName().equals("Jesus"));
+    }
+
+    @Test
+    public void shouldCheckLoanInfo(){
+        User user = new User();
+        user.setName("Jesus");
+        user.setId("1000092885");
+        Book harryPotter1 = new Book("Harry Potter y la piedra filosofal", "JK Rowling", "9788497940933");
+        library.addBook(harryPotter1);
+        library.addUser(user);
+        Loan loan = library.loanABook(user.getId(), harryPotter1.getIsbn());
+
+        assertTrue(loan.getUser().equals(user));
+        assertTrue(loan.getLoanDate() != null);
     }
 }
