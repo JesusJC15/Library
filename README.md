@@ -56,10 +56,28 @@ archetypeArtifactId: maven-archetype-quickstart
 ## Pruebas unitarias y TDD
 - Para poder implementar los métodos addBook, loanABook y returnLoan de la clase Library vamos a aplicar la técnica de TDD, por cada caso de prueba se debe hacer un commit, cada commit debe tener la prueba nueva y la implementación para que la prueba del commit funcione. Las pruebas anteriormente implementadas deben continuar funcionando. Como están trabajando en parejas es necesario trabajar en ramas independientes y utilizar Pull Request para mezclar los cambios.
 
+![](/assets/images/17.png)
+
 ## Crear clase de prueba
 Es necesario crear la clase de prueba para edu.eci.cvds.tdd.Library, la clase debe seguir los estándares de nombres estudiados en clase.
 
 Para pensar en los casos de pruebas lean detenidamente el javadoc de los métodos para reconocer las clases de equivalencia, basados en las clases de equivalencia se debe crear una prueba la cual debe fallar y posteriormente implementar el código necesario para que funcione, este proceso se debe repetir hasta cumplir con la especificación definida en el javadoc.
+
+TDD para el método "addBook de la clase "Library"
+
+- Creación de las pruebas en la clase "LibraryTest"
+
+![](/assets/images/18.png)
+
+- Ejecución de las pruebas antes de la implementación del código
+![](/assets/images/19.png)
+
+- Implementación del método "addBook de la clase "Library"
+![](/assets/images/20.png)
+
+- Ejecución de las pruebas después de la implementación del código
+![](/assets/images/21.png)
+
 
 ## Cobertura
 - Agregar la dependencia de jacoco, utilizar la última versión disponible en maven central.
