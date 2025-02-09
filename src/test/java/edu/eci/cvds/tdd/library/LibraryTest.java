@@ -1,6 +1,7 @@
 package edu.eci.cvds.tdd.library;
 
 import java.time.LocalDateTime;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -179,5 +180,4 @@ public class LibraryTest {
         assertEquals(LoanStatus.RETURNED, returnedLoan.getStatus());
         assertEquals(originalReturnDate, returnedLoan.getReturnDate());
     }
-
 }
