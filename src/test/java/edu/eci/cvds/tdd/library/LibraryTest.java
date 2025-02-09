@@ -1,11 +1,16 @@
 package edu.eci.cvds.tdd.library;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import edu.eci.cvds.tdd.library.book.Book;
+import edu.eci.cvds.tdd.library.loan.Loan;
+import edu.eci.cvds.tdd.library.loan.LoanStatus;
+import edu.eci.cvds.tdd.library.user.User;
 
 public class LibraryTest {
 
@@ -43,4 +48,20 @@ public class LibraryTest {
         assertTrue(library.addBook(orgulloYPrejuicio));
         assertTrue(library.addBook(prideAndPrejuice));
     }
+
+    @Test
+    public void shouldLoanBookToRegisteredUser(){
+        Book elPrincipito = new Book("El principito", "Antoine de Saint-Exupéry", "9788467037769");
+        User natalia = new User();
+        natalia.setId("1000097158");
+        natalia.setName("Natalia");
+
+        library.addBook(elPrincipito);
+        library.addUser(natalia);
+
+        Loan loan = library.loanABook("1000097158", "9788467037769");
+        assertNotNull(loan);
+        assertEquals(LoanStatus.ACTIVE, loan.getStatus());
+    }
+
 }

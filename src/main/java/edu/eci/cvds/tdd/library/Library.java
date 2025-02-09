@@ -1,5 +1,6 @@
 package edu.eci.cvds.tdd.library;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -7,6 +8,7 @@ import java.util.Map;
 
 import edu.eci.cvds.tdd.library.book.Book;
 import edu.eci.cvds.tdd.library.loan.Loan;
+import edu.eci.cvds.tdd.library.loan.LoanStatus;
 import edu.eci.cvds.tdd.library.user.User;
 
 /**
@@ -73,9 +75,38 @@ public class Library {
      *
      * @return The new created loan.
      */
-    public Loan loanABook(String userId, String isbn) {
-        //TODO Implement the login of loan a book to a user based on the UserId and the isbn.
-        return null;
+     public Loan loanABook(String userId, String isbn) {
+        User user = null;
+        for (User u : users) {
+            if (u.getId().equals(userId)) {
+                user = u;
+                break;
+            }
+        }
+        if (user == null){
+            return null;
+        }
+
+        Book book = null;
+        for (Book b : books.keySet()) {
+            if (b.getIsbn().equals(isbn)) {
+                book = b;
+                break;
+            }
+        }
+        if (book == null || books.get(book) == 0) {
+            return null;
+        }
+
+        Loan loan = new Loan();
+        loan.setBook(book);
+        loan.setUser(user);
+        loan.setStatus(LoanStatus.ACTIVE);
+        loan.setLoanDate(LocalDateTime.now());
+        loans.add(loan);
+
+        books.put(book, books.get(book) - 1);
+        return loan;
     }
 
     /**
