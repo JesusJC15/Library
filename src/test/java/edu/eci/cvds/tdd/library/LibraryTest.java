@@ -53,10 +53,10 @@ public class LibraryTest {
     @Test
     public void shouldNotDuplicateBooksSameISBN() {
         Book orgulloYPrejuicio = new Book("Orgullo y prejuicio", "Jane Austen", "9788497940933");
-        Book prideAndPrejuice = new Book("Orgullo y prejuicio", "Jane Austen", "9788497940933");
+        Book prideAndPrejudice = new Book("Orgullo y prejuicio", "Jane Austen", "9788497940933");
 
         assertTrue(library.addBook(orgulloYPrejuicio));
-        assertTrue(library.addBook(prideAndPrejuice));
+        assertTrue(library.addBook(prideAndPrejudice));
     }
 
     @Test

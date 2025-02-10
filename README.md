@@ -63,7 +63,7 @@ Es necesario crear la clase de prueba para edu.eci.cvds.tdd.Library, la clase de
 
 Para pensar en los casos de pruebas lean detenidamente el javadoc de los métodos para reconocer las clases de equivalencia, basados en las clases de equivalencia se debe crear una prueba la cual debe fallar y posteriormente implementar el código necesario para que funcione, este proceso se debe repetir hasta cumplir con la especificación definida en el javadoc.
 
-TDD para el método "addBook de la clase "Library"
+TDD para el método "addBook" de la clase "Library"
 
 - Creación de las pruebas en la clase "LibraryTest"
 
@@ -72,12 +72,43 @@ TDD para el método "addBook de la clase "Library"
 - Ejecución de las pruebas antes de la implementación del código
 ![](/assets/images/19.png)
 
-- Implementación del método "addBook de la clase "Library"
+- Implementación del método "addBook" de la clase "Library"
 ![](/assets/images/20.png)
 
 - Ejecución de las pruebas después de la implementación del código
 ![](/assets/images/21.png)
 
+TDD para el método "loanABook" de la clase "Library"
+
+- Creación de las pruebas en la clase "LibraryTest"
+
+![](/assets/images/22.png)
+![](/assets/images/23.png)
+
+- Ejecución de las pruebas antes de la implementación del código
+![](/assets/images/24.jpeg)
+
+- Implementación del método "loanABook" de la clase "Library"
+![](/assets/images/25.png)
+
+- Ejecución de las pruebas después de la implementación del código
+![](/assets/images/26.jpeg)
+
+TDD para el método "returnLoan" de la clase "Library"
+
+- Creación de las pruebas en la clase "LibraryTest"
+
+![](/assets/images/27.png)
+![](/assets/images/28.png)
+
+- Ejecución de las pruebas antes de la implementación del código
+![](/assets/images/29.png)
+
+- Implementación del método "returnLoan" de la clase "Library"
+![](/assets/images/30.png)
+
+- Ejecución de las pruebas después de la implementación del código
+![](/assets/images/31.png)
 
 ## Cobertura
 - Agregar la dependencia de jacoco, utilizar la última versión disponible en maven central.
