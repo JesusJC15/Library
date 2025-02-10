@@ -15,30 +15,30 @@ import edu.eci.cvds.tdd.library.loan.Loan;
 import edu.eci.cvds.tdd.library.loan.LoanStatus;
 import edu.eci.cvds.tdd.library.user.User;
 
-public class LibraryTest {
+class LibraryTest {
 
     private Library library;
     
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         library = new Library();
     }
     
     @Test
-    public void shouldAddBook() {
+    void shouldAddBook() {
         Book elPrincipito = new Book("El Principito", "Antoine de Saint-Exupéry", "9788467037769");
         assertTrue(library.addBook(elPrincipito));
     }
 
     @Test
-    public void shouldIncreaseTheAmountOfBooks() {
+    void shouldIncreaseTheAmountOfBooks() {
         Book harryPotter1 = new Book("Harry Potter y la piedra filosofal", "JK Rowling", "9788497940933");
         assertTrue(library.addBook(harryPotter1));
         assertTrue(library.addBook(harryPotter1));
     }
 
     @Test
-    public void shouldNotAddNullBook() {
+    void shouldNotAddNullBook() {
         Book nullBook = null;
         Book unvalidBook = new Book("Harry Potter y la piedra filosofal", "JK Rowling", null);
         Book unvalidBook2 = new Book("Harry Potter y la piedra filosofal", null, "9788497940933");
@@ -51,7 +51,7 @@ public class LibraryTest {
     }
 
     @Test
-    public void shouldNotDuplicateBooksSameISBN() {
+    void shouldNotDuplicateBooksSameISBN() {
         Book orgulloYPrejuicio = new Book("Orgullo y prejuicio", "Jane Austen", "9788497940933");
         Book prideAndPrejudice = new Book("Orgullo y prejuicio", "Jane Austen", "9788497940933");
 
@@ -60,7 +60,7 @@ public class LibraryTest {
     }
 
     @Test
-    public void shouldLoanBookToRegisteredUser(){
+    void shouldLoanBookToRegisteredUser(){
         Book elPrincipito = new Book("El principito", "Antoine de Saint-Exupéry", "9788467037769");
         User natalia = new User();
         natalia.setId("1000097158");
@@ -75,7 +75,7 @@ public class LibraryTest {
     }
 
     @Test
-    public void shouldNotLoanBookWithoutCopies() {
+    void shouldNotLoanBookWithoutCopies() {
         Book harryPotter1 = new Book("Harry Potter y la piedra filosofal", "JK Rowling", "9788497940933");
         library.addBook(harryPotter1);
         User natalia = new User();
@@ -89,7 +89,7 @@ public class LibraryTest {
     }
 
     @Test
-    public void shouldNotLoanBookToUnregisteredUser() {
+    void shouldNotLoanBookToUnregisteredUser() {
         Book prideAndPrejuice = new Book("Orgullo y prejuicio", "Jane Austen", "9788497940933");
         library.addBook(prideAndPrejuice);
 
@@ -98,7 +98,7 @@ public class LibraryTest {
     }
 
     @Test
-    public void shouldLoanMultipleCopiesToDifferentUsers() {
+    void shouldLoanMultipleCopiesToDifferentUsers() {
         Book elPrincipito = new Book("El principito", "Antoine de Saint-Exupéry", "9788467037769");
         User natalia = new User();
         natalia.setId("1000097158");
@@ -123,7 +123,7 @@ public class LibraryTest {
     }
   
     @Test
-    public void shouldReturnLoan(){
+    void shouldReturnLoan(){
         User user = new User();
         user.setName("Jesus");
         user.setId("1000092885");
@@ -140,7 +140,7 @@ public class LibraryTest {
     }
 
     @Test
-    public void shouldIncreaseBooksAmountWhenReturnLoan(){
+    void shouldIncreaseBooksAmountWhenReturnLoan(){
         User user = new User();
         user.setName("Jesus");
         user.setId("1000092885");
@@ -156,7 +156,7 @@ public class LibraryTest {
     }
 
     @Test
-    public void shouldNotReturnUnexistentLoan(){
+    void shouldNotReturnUnexistentLoan(){
         User user = new User();
         user.setName("Jesus");
         user.setId("1000092885");
@@ -168,7 +168,7 @@ public class LibraryTest {
     }
 
     @Test
-    public void shouldNotChangeStateOfLoanReturned(){
+    void shouldNotChangeStateOfLoanReturned(){
         User user = new User();
         user.setName("Jesus");
         user.setId("1000092885");
@@ -187,7 +187,7 @@ public class LibraryTest {
     }
 
     @Test
-    public void shouldCheckUserInfo(){
+    void shouldCheckUserInfo(){
         User user = new User();
         user.setName("Jesus");
         user.setId("1000092885");
@@ -196,7 +196,7 @@ public class LibraryTest {
     }
 
     @Test
-    public void shouldCheckLoanInfo(){
+    void shouldCheckLoanInfo(){
         User user = new User();
         user.setName("Jesus");
         user.setId("1000092885");
@@ -207,5 +207,22 @@ public class LibraryTest {
 
         assertTrue(loan.getUser().equals(user));
         assertTrue(loan.getLoanDate() != null);
+    }
+
+    @Test
+    void shouldNotLoanBookIfIsbnDoesNotExist() {
+        User user = new User();
+        user.setName("Jesus");
+        user.setId("1000092885");
+        String nonexistentIsbn = "0000000000000";
+        Loan loan = library.loanABook(user.getId(), nonexistentIsbn);
+        assertNull(loan);
+    }
+
+    @Test
+    void checkBooksEquals(){
+        Book book1 = new Book("Harry Potter y la piedra filosofal", "JK Rowling", "9788497940933");
+        Book book2 = new Book("Harry Potter y la piedra filosofal", "JK Rowling", "9788497940933");
+        assertTrue(book1.equals(book2));
     }
 }

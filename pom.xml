@@ -8,14 +8,17 @@
   <version>1.0-SNAPSHOT</version>
 
   <name>Library</name>
-  <!-- FIXME change it to the project's website -->
-  <url>http://www.example.com</url>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.release>17</maven.compiler.release>
     <maven.compiler.target>21</maven.compiler.target>
     <maven.compiler.source>21</maven.compiler.source>
+    <sonar.projectKey>library</sonar.projectKey>
+    <sonar.projectName>library</sonar.projectName> 
+    <sonar.host.url>http://localhost:9000</sonar.host.url>
+    <sonar.coverage.jacoco.xmlReportPaths>target/site/jacoco/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
+    <sonar.coverage.exclusions>edu/eci/cvds/tdd/App</sonar.coverage.exclusions>
   </properties>
 
   <dependencyManagement>
@@ -106,7 +109,7 @@
               </goals>
               <configuration>
                 <excludes>
-                  <exclude>/configurators/</exclude>
+                  <exclude>edu/eci/cvds/tdd/App</exclude>
                 </excludes>
               </configuration>
             </execution>
@@ -131,6 +134,11 @@
               </configuration>
             </execution>
           </executions>
+        </plugin>
+        <plugin>
+          <groupId>org.sonarsource.scanner.maven</groupId>
+          <artifactId>sonar-maven-plugin</artifactId>
+          <version>4.0.0.4121</version>
         </plugin>
       </plugins>
   </build>
