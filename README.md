@@ -1,5 +1,8 @@
 # Laboratorio 3 Testing TDD
 
+## Natalia Espitia Espinel
+## Jesús Alberto Jauregui Conde
+
 ## Descripción del proyecto
 El proyecto consiste en un sistema de gestión de bibliotecas, donde hay clases que representan Libro, Usuario, Prestamo, y Biblioteca. Los usuarios pueden tomar prestados libros de la biblioteca, y la Biblioteca se encarga de gestionar los préstamos, asegurarse de que los libros estén disponibles, y mantener un registro de los libros prestados.
 
@@ -122,4 +125,51 @@ TDD para el método "returnLoan" de la clase "Library"
 
 - Ahora al compilar el proyecto en la carpeta target se debe crear una carpeta con el nombre site la cual tiene un index.html, al abrir dicho archivo se debe ver la cobertura total y de cada una de las clases, el objetivo es tener la cobertura superior al 80%.
 
+Cobertura al principio del laboratorio.
 ![](/assets/images/16.png)
+
+- Explore los links del reporte en el cual le muestra que partes del código tienen prueba y cuales no.
+![](/assets/images/32.png)
+![](/assets/images/33.png)
+![](/assets/images/34.png)
+![](/assets/images/35.png)
+![](/assets/images/36.png)
+![](/assets/images/37.png)
+
+## Sonarqube
+Ahora es necesario hacer el análisis estático del código usando SonarQube, para lo cual necesitamos tener Docker.
+
+- Para lo cual se debe descargar la imagen de docker con el siguiente comando docker pull sonarqube
+![](/assets/images/38.png)
+
+- Ahora se debe arrancar el servicio de SonarQube con el siguiente comando: docker run -d --name sonarqube -e SONAR_ES_BOOTSTRAP_CHECKS_DISABLE=true -p 9000:9000 sonarqube:latest
+![](/assets/images/39.png)
+
+- Validar funcionamiento docker ps -a
+![](/assets/images/40.png)mvn
+
+- Iniciar sesión en sonar localhost:9000 cambiar la clave por defecto usuario y contraseña es admin.
+![](/assets/images/41.png)
+![](/assets/images/42.png)
+
+- Una vez sonar este corriendo deben generar un token
+Entrar a las opciones de la cuenta.
+Account -> settings -> generate token.
+
+![](/assets/images/43.png)
+
+- Instale sonarLint en el IDE que este manejando.
+![](/assets/images/44.png)
+
+- Añada el plugin de Sonar en el archivo pom del proyecto.
+![](/assets/images/45.png)
+
+- Añada las propiedades de SonarQube y Jacoco.
+![](/assets/images/46.png)
+
+- Construya el proyecto, genere el reporte de JACOCO y corrija el cubrimiento de las pruebas de unidad para que su proyecto se construya adecuadamente.
+![](/assets/images/47.png)
+![](/assets/images/48.png)
+
+- Genere la integración con sonar mvn verify sonar:sonar -D sonar.token=TOKEN_GENERADO
+![](/assets/images/49.png)

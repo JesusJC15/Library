@@ -37,29 +37,12 @@ public class Library {
      * @return true if the book was stored false otherwise.
      */
     public boolean addBook(Book book) {
-        //Check if the book is null or if the book information is incomplete
-        if(!checkBookInfo(book)){
+        if (book == null || book.getTitle() == null || book.getAuthor() == null || book.getIsbn() == null) {
             return false;
         }
-
-        //Books with the same ISBN are considered the same book
-        for(Book b : books.keySet()){
-            if(b.equals(book)){
-                books.put(b, books.get(b) + 1);
-                return true;
-            }
-        }
-
-        //If the book is not in the map, add it
-        books.put(book, 1);
+        
+        books.merge(book, 1, Integer::sum);
         return true;
-    }
-
-    private boolean checkBookInfo(Book book) {
-        if(book == null){
-            return false;
-        }
-        return !(book.getTitle() == null || book.getAuthor() == null || book.getIsbn() == null);
     }
 
     /**
@@ -76,36 +59,32 @@ public class Library {
      * @return The new created loan.
      */
      public Loan loanABook(String userId, String isbn) {
-        User user = null;
-        for (User u : users) {
-            if (u.getId().equals(userId)) {
-                user = u;
-                break;
-            }
-        }
-        if (user == null){
-            return null;
+        User user = users.stream()
+                .filter(u -> u.getId().equals(userId))
+                .findFirst()
+                .orElse(null);
+
+        if (user == null) {
+        return null;
         }
 
-        Book book = null;
-        for (Book b : books.keySet()) {
-            if (b.getIsbn().equals(isbn)) {
-                book = b;
-                break;
-            }
-        }
+        Book book = books.keySet().stream()
+                .filter(b -> b.getIsbn().equals(isbn))
+                .findFirst()
+                .orElse(null);
+
         if (book == null || books.get(book) == 0) {
-            return null;
+        return null;
         }
 
         Loan loan = new Loan();
-        loan.setBook(book);
         loan.setUser(user);
-        loan.setStatus(LoanStatus.ACTIVE);
+        loan.setBook(book);
         loan.setLoanDate(LocalDateTime.now());
+        loan.setStatus(LoanStatus.ACTIVE);
         loans.add(loan);
-
         books.put(book, books.get(book) - 1);
+
         return loan;
     }
 
